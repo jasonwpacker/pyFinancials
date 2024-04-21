@@ -18,5 +18,5 @@ def get_next_business_day(date):
 
 if __name__ == '__main__':
     with open('holidays.txt', 'r') as f:
-        holidays = [line.strip() for line in f.readlines()]
+        holidays = [datetime.strptime(line.strip(), '%Y-%m-%d') for line in f.readlines()]
     app.run(debug=True)
