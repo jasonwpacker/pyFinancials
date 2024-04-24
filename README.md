@@ -1,11 +1,10 @@
 # Holidays and Business Days
 
-This short and dirty version will return a list of all holidays included in a configuration file
-or, provided a specific date, return the next business day taking into account weekends and the
-holidays included in the configuration file.
+A quick and dirty API for holidays and business days.
 
-Possible improvements:
-* Store holidays in a database
-* Build a UI to manage the holidays
-* Replace the list with a programmatic solution to calculating holidays
-* Scrape the holidays from the NYSE and Fed websites
+Routes:
+* GET /holidays/<year>
+Takes a four digit year as a parameter and returns a list of all 11 holidays honored by the NYSE and the Federal Reserve
+
+* GET /next-business-day/<date>
+Takes a date in the YYYY-DD-MM format and returns either the same date or, if it is a holiday or weekend, the next business day.

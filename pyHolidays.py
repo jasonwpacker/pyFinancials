@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+from json import loads
 from datetime import datetime as dt, timedelta as td
 from dateutil import easter
 
@@ -88,10 +89,7 @@ def calculate_columbus_day(year):
     col += td(days=7)
     return dt.strftime(col, '%Y-%m-%d')
 
-
-# Build the list from holidays.txt programmatically and return it in JSON format
-@app.route('/holidays/<year>', methods=['GET'])
-def get_holidays_by_year(year):
+def holidays_by_year(year):
     holidays = [calculate_new_years_observed(year)]
     holidays.append(calculate_mlk_day(year))
     holidays.append(calculate_washington_bday(year))
@@ -104,22 +102,21 @@ def get_holidays_by_year(year):
     holidays.append(calculate_veterans_day_observed(year))
     holidays.append(calculate_thanksgiving(year))
     holidays.append(calculate_christmas(year))
-    return jsonify(holidays)
+    return holidays
 
-# Reformat the data from 'holidays.txt' into JSON
-@app.route('/holidays', methods=['GET'])
-def get_holidays():
-    return jsonify(holidays)
+# Build the list from holidays.txt programmatically and return it in JSON format
+@app.route('/holidays/<year>', methods=['GET'])
+def get_holidays_by_year(year):
+    return jsonify(holidays_by_year(year))
 
 # If the date submitted is a holiday or weekend, increment the date until it is not
 @app.route('/next-business-day/<date>', methods=['GET'])
 def get_next_business_day(date):
+    holidays = holidays_by_year(date[0:4])
     date = dt.strptime(date,'%Y-%m-%d')
-    while date in holidays or date.weekday() >= 5:
+    while date in [dt.strptime(hday, '%Y-%m-%d') for hday in holidays] or date.weekday() >= 5:
         date += td(days=1)
     return jsonify({'next_business_day': date.strftime('%Y-%m-%d')})
 
 if __name__ == '__main__':
-    with open('holidays.txt', 'r') as f:
-        holidays = [dt.strptime(line.strip(), '%Y-%m-%d') for line in f.readlines()]
     app.run(debug=True)
