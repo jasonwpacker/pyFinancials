@@ -107,11 +107,17 @@ def holidays_by_year(year):
 # Build the list from holidays.txt programmatically and return it in JSON format
 @app.route('/holidays/<year>', methods=['GET'])
 def get_holidays_by_year(year):
-    return jsonify(holidays_by_year(year))
+    if year.isnumeric() and (1000 <= int(year) <= 9999):
+        return jsonify(holidays_by_year(year))
+    return "Invalid Year Parameter (1000-9999)", 400
 
 # If the date submitted is a holiday or weekend, increment the date until it is not
 @app.route('/next-business-day/<date>', methods=['GET'])
 def get_next_business_day(date):
+    try:
+        dt.strptime(date, '%Y-%m-%d')
+    except:
+        return "Invalid Date Format: YYYY-MM-DD", 400
     holidays = holidays_by_year(date[0:4])
     date = dt.strptime(date,'%Y-%m-%d')
     while date in [dt.strptime(hday, '%Y-%m-%d') for hday in holidays] or date.weekday() >= 5:
