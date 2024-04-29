@@ -8,3 +8,10 @@ Takes a four digit year as a parameter and returns a list of all 11 holidays hon
 
 * GET /next-business-day/<date>
 Takes a date in the YYYY-DD-MM format and returns either the same date or, if it is a holiday or weekend, the next business day.
+
+
+Future functionality
+* Add in additional financial lookups for yearly contribution limits for retirement accounts
+* Tax implications based on age
+* Add tests
+* Port to Node.js

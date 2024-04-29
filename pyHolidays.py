@@ -24,7 +24,7 @@ def calculate_washington_bday(year):
     wbd = dt.strptime(f'{year}-02-01', '%Y-%m-%d')
     while wbd.weekday() != 0:
         wbd += td(days=1)
-    wbd += td(days=7)
+    wbd += td(days=14)
     return dt.strftime(wbd, '%Y-%m-%d')
 
 def calculate_good_friday(year):
