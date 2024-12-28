@@ -27,3 +27,7 @@ Takes in a year >= 2019 and returns the catch-up contribution maximum for the ye
 * GET /contribution/SIMPLECatchUp/<year>
 Takes in a year >= 2019 and returns the catch-up contribution maximum for the year for SIMPLE 401k
 
+# Requirements
+
+Install the 'dateutil' package 
+**pip install python-dateutil**
