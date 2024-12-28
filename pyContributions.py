@@ -20,5 +20,13 @@ def get_SIMPLECatchUp_max(year):
     return maxima.get("SIMPLECatchUP").get(year)
 
 if __name__ == '__main__':
-    maxima = json.load(open('limits.json'))
-    app.run(debug=True)
+    with open('limits.json') as limitsfile:
+        try:
+            maxima = json.load(limitsfile)
+            app.run(debug=True)
+        except FileNotFoundError:
+            print("No Maxima File was found.")
+        except PermissionError:
+            print("No rights to read the limits file.")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
