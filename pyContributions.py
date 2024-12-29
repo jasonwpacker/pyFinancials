@@ -30,7 +30,7 @@ def get_401kCatchUp_max(year):
 
 @app.route('/contribution/SIMPLECatchUp/<year>', methods=['GET'])
 def get_SIMPLECatchUp_max(year):
-    return contribution_max("SIMPLECatchUP", year)
+    return contribution_max("SIMPLECatchUp", year)
 
 if __name__ == '__main__':
     app.run(debug=True)
